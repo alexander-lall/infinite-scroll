@@ -43,14 +43,14 @@ function addImagesToDom(){
         imageGrid.classList.add('image-grid');
 
         // Large image
-        let largeImage = createImage(imagesToAdd[index]);
+        let largeImage = createImage(imagesToAdd[index], true);
         largeImage.classList.add(isLastLargeImageLeftAligned ? 'large-right-aligned' : 'large-left-aligned')
         isLastLargeImageLeftAligned = !isLastLargeImageLeftAligned;
         imageGrid.appendChild(largeImage);
 
         // Other smaller images
         for(let j = 1; j < imagesPerGrid; j++) {
-            imageGrid.appendChild(createImage(imagesToAdd[index + j]));
+            imageGrid.appendChild(createImage(imagesToAdd[index + j], false));
         }
 
         imageContainer.appendChild(imageGrid);
@@ -58,7 +58,7 @@ function addImagesToDom(){
 }
 
 // Helper Functions
-function createImage(imgData) {
+function createImage(imgData, isSmall) {
     // Create <a> to link to Unsplash
     let a = document.createElement('a');
     setAttributes(a, {
@@ -68,7 +68,7 @@ function createImage(imgData) {
     // Create <img> for photo
     let img = document.createElement('img');
     setAttributes(img, {
-        src: imgData.urls.small,
+        src: isSmall ? imgData.urls.small : imgData.urls.regular,
         alt: imgData.alt_description,
         title: imgData.alt_description
     });
